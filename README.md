@@ -196,8 +196,6 @@ pnpm lint:type   # 타입 체크만 수행
 
 ## 아키텍처 — 5-Layer
 
-과제 가이드의 레이어 구분을 그대로 따랐습니다.
-
 ```
 Pages → Components → Services → Repositories → HttpClient
                          ↕
