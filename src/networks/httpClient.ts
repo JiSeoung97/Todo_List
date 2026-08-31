@@ -88,8 +88,8 @@ export default class HttpClient {
   };
 }
 
-/** 상태 코드를 보존하는 에러 — 화면에서 401 등을 구분해 처리할 수 있게 한다 */
-export class HttpError extends Error {
+/** 상태 코드를 보존하는 에러 — 인터셉터가 이 형태로 변환해 던진다 */
+class HttpError extends Error {
   constructor(message: string, public readonly status?: number) {
     super(message);
     this.name = "HttpError";

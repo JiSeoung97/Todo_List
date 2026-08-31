@@ -22,7 +22,7 @@ const services = {
   todoService: new TodoService(new TodoRepository(httpClient)),
 };
 
-export type TServices = typeof services;
+type TServices = typeof services;
 
 const ServiceContext = createContext<TServices | null>(null);
 
