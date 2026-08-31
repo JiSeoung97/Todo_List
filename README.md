@@ -165,7 +165,7 @@ pnpm lint:type   # 타입 체크만 수행
 | 언어            | TypeScript 6 (**strict 모드**)      |
 | 프레임워크      | React 19                            |
 | 빌드            | Vite 8 + `@vitejs/plugin-react-swc` |
-| 서버 상태       | **TanStack Query 5** (+ Devtools)   |
+| 서버 상태       | **TanStack Query 5**                |
 | 클라이언트 상태 | Zustand 5 (`devtools`, `persist`)   |
 | HTTP            | axios                               |
 | 라우팅          | React Router 8                      |
