@@ -86,7 +86,6 @@ export default class HttpClient {
     );
     return data;
   };
-
 }
 
 /** 상태 코드를 보존하는 에러 — 화면에서 401 등을 구분해 처리할 수 있게 한다 */

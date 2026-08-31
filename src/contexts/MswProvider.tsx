@@ -1,6 +1,6 @@
-import { ENV_ENABLE_MSW } from '@/src/consts/common/envKeys';
-import type { SetupWorker } from 'msw/browser';
-import { Suspense, use, type ReactNode } from 'react';
+import { ENV_ENABLE_MSW } from "@/src/consts/common/envKeys";
+import type { SetupWorker } from "msw/browser";
+import { Suspense, use, type ReactNode } from "react";
 
 let workerRef: SetupWorker | undefined;
 
@@ -9,27 +9,27 @@ let workerRef: SetupWorker | undefined;
  * 워커 start 를 Suspense 로 기다린 뒤 앱을 렌더링한다.
  */
 const mockingEnabledPromise = ENV_ENABLE_MSW
-	? import('@/src/mocks/browser').then(async ({ worker }) => {
-			workerRef = worker;
-			await worker.start({ onUnhandledRequest: 'bypass' });
-		})
-	: Promise.resolve();
+  ? import("@/src/mocks/browser").then(async ({ worker }) => {
+      workerRef = worker;
+      await worker.start({ onUnhandledRequest: "bypass" });
+    })
+  : Promise.resolve();
 
 if (import.meta.hot) {
-	import.meta.hot.dispose(() => {
-		workerRef?.stop();
-	});
+  import.meta.hot.dispose(() => {
+    workerRef?.stop();
+  });
 }
 
 const MswProviderInner = ({ children }: { children: ReactNode }) => {
-	use(mockingEnabledPromise);
-	return children;
+  use(mockingEnabledPromise);
+  return children;
 };
 
 const MswProvider = ({ children }: { children: ReactNode }) => (
-	<Suspense fallback={null}>
-		<MswProviderInner>{children}</MswProviderInner>
-	</Suspense>
+  <Suspense fallback={null}>
+    <MswProviderInner>{children}</MswProviderInner>
+  </Suspense>
 );
 
 export default MswProvider;

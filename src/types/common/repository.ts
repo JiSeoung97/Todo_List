@@ -6,24 +6,24 @@
 
 /** 목록 조회 공통 쿼리 파라미터 — GET 쿼리스트링으로 직렬화된다 */
 export interface IPageQuery {
-	/** 1-based 페이지 번호 */
-	page: number;
-	/** 페이지당 건수 */
-	size: number;
+  /** 1-based 페이지 번호 */
+  page: number;
+  /** 페이지당 건수 */
+  size: number;
 }
 
 /** 페이지네이션 응답 공통 형태 */
 export interface IPaginatedResponse<T> {
-	items: T[];
-	page: number;
-	size: number;
-	/** 필터 적용 후 전체 건수 */
-	totalCount: number;
-	totalPages: number;
+  items: T[];
+  page: number;
+  size: number;
+  /** 필터 적용 후 전체 건수 */
+  totalCount: number;
+  totalPages: number;
 }
 
 /** 서버 에러 응답 본문 (MSW 핸들러가 4xx 와 함께 반환) */
 export interface IErrorResponse {
-	message: string;
-	code?: string;
+  message: string;
+  code?: string;
 }
