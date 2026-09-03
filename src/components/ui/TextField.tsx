@@ -19,7 +19,7 @@ const TextField = ({ label, errorMessage, className, id, ...props }: IProps) => 
 			id={id}
 			aria-invalid={Boolean(errorMessage)}
 			className={cn(
-				'rounded-lg border px-3 py-2 text-sm outline-none transition-colors',
+				'rounded-lg border px-3 py-2 text-sm transition-colors outline-none',
 				'focus:border-slate-900 focus:ring-1 focus:ring-slate-900',
 				errorMessage ? 'border-red-400' : 'border-slate-300',
 				className,
