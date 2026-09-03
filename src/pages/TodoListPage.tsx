@@ -1,12 +1,14 @@
 import TodoFilterBar from "@/src/components/todo/TodoFilterBar";
-import TodoList from "@/src/components/todo/TodoList";
+import TodoListItem from "@/src/components/todo/TodoListItem";
 import Button from "@/src/components/ui/Button";
+import List from "@/src/components/ui/list/List";
 import Pagination from "@/src/components/ui/Pagination";
-import { DEFAULT_PAGE_SIZE, type TTodoStatus } from "@/src/consts/common/todo";
+import { type TTodoStatus } from "@/src/consts/common/todo";
 import { useServices } from "@/src/contexts/ServiceProvider";
 import useAuthStore from "@/src/stores/common/authStore";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import useTodoListFilter from "@/src/hooks/todo/useTodoListFilter";
 
 /**
  * 목록 페이지 — 검색/필터/페이지 상태를 보유하고 service 훅에 전달한다.
@@ -19,32 +21,21 @@ const TodoListPage = () => {
 
   // 입력 중인 검색어와 실제 조회에 쓰이는 검색어를 분리 — 타이핑마다 요청이 나가지 않게 한다
   const [keywordInput, setKeywordInput] = useState("");
-  const [keyword, setKeyword] = useState("");
-  const [status, setStatus] = useState<TTodoStatus | "">("");
-  const [page, setPage] = useState(1);
+  const { query, setQuery } = useTodoListFilter();
 
-  const { data, isLoading, error } = todoService.useGetTodoList({
-    page,
-    size: DEFAULT_PAGE_SIZE,
-    keyword: keyword || undefined,
-    status: status || undefined,
-  });
+  const { data, isLoading, error } = todoService.useGetTodoList(query);
 
   const handleSearch = () => {
-    setKeyword(keywordInput);
-    setPage(1); // 조건이 바뀌면 1페이지부터
+    setQuery({ keyword: keywordInput });
   };
 
   const handleReset = () => {
     setKeywordInput("");
-    setKeyword("");
-    setStatus("");
-    setPage(1);
+    setQuery({ keyword: "", status: "" });
   };
 
   const handleStatusChange = (next: TTodoStatus | "") => {
-    setStatus(next);
-    setPage(1);
+    setQuery({ status: next });
   };
 
   const handleLogout = () => {
@@ -73,20 +64,24 @@ const TodoListPage = () => {
           onKeywordInputChange={setKeywordInput}
           onSearch={handleSearch}
           onReset={handleReset}
-          status={status}
+          status={query.status ?? ""}
           onStatusChange={handleStatusChange}
         />
 
-        <TodoList
-          todos={data?.items ?? []}
+        <List
+          items={data?.items ?? []}
           isLoading={isLoading}
           errorMessage={error?.message}
+          getKey={(todo) => todo.id}
+          renderItem={(todo) => <TodoListItem todo={todo} />}
+          emptyTitle="조건에 맞는 항목이 없습니다."
+          emptyDescription="검색어나 상태 필터를 변경해 보세요."
         />
 
         <Pagination
-          page={data?.page ?? 1}
+          page={query.page}
           totalPages={data?.totalPages ?? 1}
-          onChange={setPage}
+          onChange={(page) => setQuery({ page })}
         />
       </div>
     </main>
