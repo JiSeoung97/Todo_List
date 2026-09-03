@@ -1,4 +1,5 @@
 import Button from "@/src/components/ui/Button";
+import SearchField from "@/src/components/ui/SearchField";
 import { TODO_STATUSES, type TTodoStatus } from "@/src/consts/common/todo";
 import type { ChangeEvent, FormEvent } from "react";
 
@@ -34,12 +35,13 @@ const TodoFilterBar = ({
       onSubmit={handleSubmit}
       className="flex flex-wrap items-center gap-2 rounded-xl border border-slate-200 bg-white p-3"
     >
-      <input
+      <SearchField
         value={keywordInput}
         onChange={(event) => onKeywordInputChange(event.target.value)}
+        onClear={() => onKeywordInputChange("")}
         placeholder="제목 · 담당자 · ID 검색"
         aria-label="검색어"
-        className="min-w-56 flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900"
+        className="min-w-56"
       />
 
       <select

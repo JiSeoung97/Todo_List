@@ -1,47 +1,33 @@
-import TodoPriorityBadge from "@/src/components/todo/TodoPriorityBadge";
-import TodoStatusBadge from "@/src/components/todo/TodoStatusBadge";
+import Badge from "@/src/components/ui/Badge";
+import ListItem from "@/src/components/ui/list/ListItem";
+import ProgressBar from "@/src/components/ui/ProgressBar";
+import {
+  TODO_PRIORITIES,
+  TODO_PRIORITY_TONES,
+  TODO_STATUS_TONES,
+  TODO_STATUSES,
+} from "@/src/consts/common/todo";
 import type { ITodo } from "@/src/types/todo/todo";
 import { cn } from "@/src/utils/cn";
 import { formatDate, isOverdue } from "@/src/utils/date";
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 
+/** 목록 카드에 담을 TODO 고유 정보 — 카드의 뼈대는 ui/list/ListItem 이 갖는다 */
 const TodoListItem = ({ todo }: { todo: ITodo }) => {
+  const navigate = useNavigate();
   const overdue = isOverdue(todo.dueDate) && todo.status !== "DONE";
 
   return (
-    <li>
-      <Link
-        to={`/todos/${todo.id}`}
-        className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 transition-shadow hover:shadow-sm sm:flex-row sm:items-center sm:justify-between"
-      >
-        <div className="flex min-w-0 flex-col gap-1">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-xs text-slate-400">{todo.id}</span>
-            <TodoStatusBadge status={todo.status} />
-            <TodoPriorityBadge priority={todo.priority} />
-          </div>
-
-          <p className="truncate text-sm font-medium text-slate-900">
-            {todo.title}
-          </p>
-
-          <p className="text-xs text-slate-500">
-            담당 {todo.assignee} · 등록 {formatDate(todo.createdAt)}
-          </p>
-        </div>
-
-        <div className="flex shrink-0 items-center gap-6">
+    <ListItem
+      onClick={() => void navigate(`/todos/${todo.id}`)}
+      aside={
+        <>
           {/* 숫자 필드 — 진행률 */}
           <div className="flex w-28 flex-col gap-1">
             <span className="text-xs text-slate-500">
               진행률 {todo.progress}%
             </span>
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
-              <div
-                className="h-full rounded-full bg-slate-900"
-                style={{ width: `${todo.progress}%` }}
-              />
-            </div>
+            <ProgressBar value={todo.progress} className="w-full" />
           </div>
 
           {/* 날짜 필드 — 마감일 */}
@@ -56,9 +42,27 @@ const TodoListItem = ({ todo }: { todo: ITodo }) => {
               {formatDate(todo.dueDate)}
             </span>
           </div>
-        </div>
-      </Link>
-    </li>
+        </>
+      }
+    >
+      <div className="flex items-center gap-2">
+        <span className="font-mono text-xs text-slate-400">{todo.id}</span>
+        <Badge tone={TODO_STATUS_TONES[todo.status]}>
+          {TODO_STATUSES[todo.status]}
+        </Badge>
+        <Badge tone={TODO_PRIORITY_TONES[todo.priority]} variant="text">
+          {TODO_PRIORITIES[todo.priority]}
+        </Badge>
+      </div>
+
+      <p className="truncate text-sm font-medium text-slate-900">
+        {todo.title}
+      </p>
+
+      <p className="text-xs text-slate-500">
+        담당 {todo.assignee} · 등록 {formatDate(todo.createdAt)}
+      </p>
+    </ListItem>
   );
 };
 

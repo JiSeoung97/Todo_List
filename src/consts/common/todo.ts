@@ -1,3 +1,5 @@
+import type { TBadgeTone } from "@/src/components/ui/Badge";
+
 /** TODO 상태 — enum 성 필드 */
 export const TODO_STATUSES = {
   TODO: "대기",
@@ -25,3 +27,18 @@ export const TODO_PRIORITY_CODES = Object.keys(
 
 /** 목록 기본 페이지 크기 */
 export const DEFAULT_PAGE_SIZE = 10;
+
+/** 상태·우선순위를 Badge 의 톤으로 옮기는 표 — 색 결정은 도메인이 소유한다 */
+export const TODO_STATUS_TONES: Record<TTodoStatus, TBadgeTone> = {
+  TODO: "neutral",
+  IN_PROGRESS: "info",
+  DONE: "success",
+  HOLD: "warning",
+};
+
+export const TODO_PRIORITY_TONES: Record<TTodoPriority, TBadgeTone> = {
+  LOW: "muted",
+  MEDIUM: "neutral",
+  HIGH: "warning",
+  URGENT: "danger",
+};
