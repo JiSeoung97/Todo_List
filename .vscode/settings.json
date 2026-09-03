@@ -1,10 +1,17 @@
 {
-  // 자동 import 를 @/src/... 절대경로로 삽입 (tsconfig 의 paths 를 따른다)
-  "typescript.preferences.importModuleSpecifier": "non-relative",
-  "javascript.preferences.importModuleSpecifier": "non-relative",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
 
-  // 저장 시 import 정렬 + 미사용 제거 (noUnusedLocals 와 궁합)
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": "explicit"
-  }
+	// import 정렬은 prettier-plugin-organize-imports 가 담당한다
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
+	},
+
+	// 자동 import 를 @/src/... 절대경로로 삽입 (tsconfig 의 paths 를 따른다)
+	"typescript.preferences.importModuleSpecifier": "non-relative",
+	"javascript.preferences.importModuleSpecifier": "non-relative",
+
+	"[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+	"[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+	"[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }
 }
