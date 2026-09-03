@@ -1,0 +1,10 @@
+{
+  // 자동 import 를 @/src/... 절대경로로 삽입 (tsconfig 의 paths 를 따른다)
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+
+  // 저장 시 import 정렬 + 미사용 제거 (noUnusedLocals 와 궁합)
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  }
+}
