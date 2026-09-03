@@ -1,5 +1,5 @@
 import { ENV_API_BASE_URL } from '@/src/consts/common/envKeys';
-import type AuthMockRepository from '@/src/mocks/repositories/auth/authMockRepository';
+import type AuthMockRepository from '@/src/mocks/repositories/authMockRepository';
 import type { ILoginRequest } from '@/src/types/auth/auth';
 import { delay, http, HttpResponse, type HttpHandler } from 'msw';
 

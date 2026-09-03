@@ -68,6 +68,15 @@ export default class HttpClient {
 		const { data } = await this.axios.post<U, { data: U }, T>(url, body, config);
 		return data;
 	};
+
+	public patch = async <T, U>(url: string, body?: T, config?: AxiosRequestConfig): Promise<U> => {
+		const { data } = await this.axios.patch<U, { data: U }, T>(url, body, config);
+		return data;
+	};
+	public delete = async <U>(url: string, config?: AxiosRequestConfig): Promise<U> => {
+		const { data } = await this.axios.delete<U>(url, config);
+		return data;
+	};
 }
 
 /** 상태 코드를 보존하는 에러 — 인터셉터가 이 형태로 변환해 던진다 */

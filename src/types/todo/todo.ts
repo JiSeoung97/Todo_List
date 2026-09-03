@@ -29,3 +29,9 @@ export interface ITodoListQuery extends IPageQuery {
 	/** 상태 필터 — 미지정 시 전체 */
 	status?: TTodoStatus;
 }
+
+/** 생성 요청 — id 와 createdAt 은 서버가 정한다 */
+export type TTodoCreateRequest = Omit<ITodo, 'id' | 'createdAt'>;
+
+/** 수정 요청 — 바꿀 필드만 보낸다 (PATCH) */
+export type TTodoUpdateRequest = Partial<TTodoCreateRequest>;

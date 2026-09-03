@@ -1,5 +1,5 @@
 import { queryClient } from '@/src/contexts/QueryProvider';
-import type AuthRepository from '@/src/repositories/auth/authRepository';
+import type AuthRepository from '@/src/repositories/authRepository';
 import BaseService from '@/src/services/common/baseService';
 import useAuthStore from '@/src/stores/common/authStore';
 import type { ILoginRequest } from '@/src/types/auth/auth';

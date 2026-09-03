@@ -1,7 +1,12 @@
 import type HttpClient from '@/src/networks/httpClient';
 import BaseRepository from '@/src/repositories/common/baseRepository';
 import type { IPaginatedResponse } from '@/src/types/common/repository';
-import type { ITodo, ITodoListQuery } from '@/src/types/todo/todo';
+import type {
+	ITodo,
+	ITodoListQuery,
+	TTodoCreateRequest,
+	TTodoUpdateRequest,
+} from '@/src/types/todo/todo';
 
 /**
  * TODO 리포지토리 — RESTful 엔드포인트만 감싼다.
@@ -20,4 +25,15 @@ export default class TodoRepository extends BaseRepository {
 
 	/** GET /todos/:id */
 	public getTodo = (id: string): Promise<ITodo> => this.httpClient.get<ITodo>(this.url(id));
+
+	/** POST /todos */
+	public createTodo = (body: TTodoCreateRequest): Promise<ITodo> =>
+		this.httpClient.post<TTodoCreateRequest, ITodo>(this.path, body);
+
+	/** PATCH /todos/:id */
+	public updateTodo = (id: string, body: TTodoUpdateRequest): Promise<ITodo> =>
+		this.httpClient.patch<TTodoUpdateRequest, ITodo>(this.url(id), body);
+
+	/** DELETE /todos/:id */
+	public deleteTodo = (id: string): Promise<void> => this.httpClient.delete<void>(this.url(id));
 }

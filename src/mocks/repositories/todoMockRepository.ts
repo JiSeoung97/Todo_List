@@ -4,7 +4,12 @@ import {
 	TODO_STATUS_CODES,
 } from '@/src/consts/common/todo';
 import BaseMockRepository from '@/src/mocks/repositories/common/baseMockRepository';
-import type { ITodo, ITodoListQuery } from '@/src/types/todo/todo';
+import type {
+	ITodo,
+	ITodoListQuery,
+	TTodoCreateRequest,
+	TTodoUpdateRequest,
+} from '@/src/types/todo/todo';
 import { faker } from '@faker-js/faker';
 
 /** 재실행 시에도 같은 목데이터가 나오도록 시드 고정 */
@@ -92,4 +97,25 @@ export default class TodoMockRepository extends BaseMockRepository<ITodo> {
 
 		return this.paginate(sorted, page, size);
 	};
+
+	/**
+	 * 다음 id 를 채번한다 — 기존 번호의 최댓값 + 1.
+	 * items.length 로 세면 중간을 삭제했을 때 기존 id 와 충돌한다.
+	 */
+	private nextId = (): string =>
+		`TODO-${String(Math.max(0, ...this.items.map(todo => Number(todo.id.split('-')[1]))) + 1).padStart(3, '0')}`;
+
+	/** id 와 등록일은 서버가 정한다 */
+	public createTodo = (body: TTodoCreateRequest): ITodo =>
+		this.create({
+			...body,
+			id: this.nextId(),
+			createdAt: new Date().toISOString(),
+		});
+
+	/** PATCH — 부분 병합 */
+	public updateTodo = (id: string, patch: TTodoUpdateRequest) => this.update(id, patch);
+
+	/** DELETE */
+	public removeTodo = (id: string) => this.remove(id);
 }

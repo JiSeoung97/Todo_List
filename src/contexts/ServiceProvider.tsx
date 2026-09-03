@@ -1,9 +1,9 @@
 import { ENV_API_BASE_URL } from '@/src/consts/common/envKeys';
 import HttpClient from '@/src/networks/httpClient';
-import AuthRepository from '@/src/repositories/auth/authRepository';
-import TodoRepository from '@/src/repositories/todo/todoRepository';
-import AuthService from '@/src/services/auth/authService';
-import TodoService from '@/src/services/todo/todoService';
+import AuthRepository from '@/src/repositories/authRepository';
+import TodoRepository from '@/src/repositories/todoRepository';
+import AuthService from '@/src/services/authService';
+import TodoService from '@/src/services/todoService';
 import useAuthStore from '@/src/stores/common/authStore';
 import { createContext, use, type ReactNode } from 'react';
 
